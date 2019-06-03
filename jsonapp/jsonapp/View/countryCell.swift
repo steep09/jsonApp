@@ -13,4 +13,8 @@ class countryCell: UITableViewCell {
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var capital: UILabel!
 
+    func configureCell(json: jsonStruct) {
+        self.name.text = json.name
+        self.capital.text = json.capital
+    }
 }

@@ -8,15 +8,6 @@
 
 import UIKit
 
-struct jsonStruct: Decodable {
-    let name: String
-    let capital: String
-    let alpha2Code: String
-    let alpha3Code: String
-    let region: String
-    let subregion: String
-}
-
 class ViewController: UIViewController {
     
     @IBOutlet weak var mainTableView: UITableView!
@@ -39,10 +30,8 @@ class ViewController: UIViewController {
                 if error == nil {
                     self.arrdata = try JSONDecoder().decode([jsonStruct].self, from: data!)
                     
-                    for mainarr in self.arrdata {
-                        DispatchQueue.main.async {
-                            self.mainTableView.reloadData()
-                        }
+                    DispatchQueue.main.async {
+                        self.mainTableView.reloadData()
                     }
                 }
             } catch{
@@ -65,17 +54,16 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "countryCell") as! countryCell
-        cell.name.text = "Name : \(arrdata[indexPath.row].name)"
-        cell.capital.text = "Capital : \(arrdata[indexPath.row].capital)"
+        let json = arrdata[indexPath.row]
+        cell.name.text = "Name : \(json.name)"
+        cell.capital.text = "Capital : \(json.capital)"
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detail = storyboard?.instantiateViewController(withIdentifier: "detail") as! DetailVC
-        detail.strregion = arrdata[indexPath.row].region
-        detail.strsubregion = arrdata[indexPath.row].subregion
-        detail.stralpha2 = arrdata[indexPath.row].alpha2Code
-        detail.stralpha3 = arrdata[indexPath.row].alpha3Code
+        let json = arrdata[indexPath.row]
+        detail.initData(region: json.region, subregion: json.subregion, alpha2: json.alpha2Code, alpha3: json.alpha3Code)
         present(detail, animated: false, completion: nil)
     }
     

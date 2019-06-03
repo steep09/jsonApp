@@ -15,10 +15,17 @@ class DetailVC: UIViewController {
     @IBOutlet weak var subregion: UILabel!
     @IBOutlet weak var region: UILabel!
     
-    var strregion = ""
-    var strsubregion = ""
-    var stralpha2 = ""
-    var stralpha3 = ""
+    var strregion: String!
+    var strsubregion: String!
+    var stralpha2: String!
+    var stralpha3: String!
+    
+    func initData(region: String, subregion: String, alpha2: String, alpha3: String) {
+        self.strregion = region
+        self.strsubregion = subregion
+        self.stralpha2 = alpha2
+        self.stralpha3 = alpha3
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
